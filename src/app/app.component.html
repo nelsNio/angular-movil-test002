@@ -1,20 +1,94 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+  <app-dado valor="{{valor1}}"></app-dado>
+  <app-dado valor="{{valor2}}"></app-dado>
+  <app-dado valor="{{valor3}}"></app-dado>
+  <hr>
+  <button (click)="tirar()">Tirar</button>  
+  <hr>
+  <p>Resultado:{{resultado}}</p>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
+<div style="text-align:center">
+  <h1>Prueba de la componente cronometro</h1>
+  <app-cronometro inicio="15" (multiplo10)="actualizar($event)"></app-cronometro>
+  <h2>Evento</h2>
+  <h3>{{mensaje}}</h3>
+</div>
+
+
+<div style="text-align:center">
+  <app-selectornumerico minimo="1" maximo="10" #selector1></app-selectornumerico>
+  <br>  
+  <button (click)="fijarSelector1(1)">Fijar en 1</button><br>
+  <button (click)="fijarSelector1(5)">Fijar en 5</button><br>
+  <button (click)="fijarSelector1(10)">Fijar en 10</button>
+  <hr>
+  <app-selectornumerico minimo="1" maximo="10" #selector2></app-selectornumerico>    
+  <br>
+  <button (click)="fijarSelector2(1)">Fijar en 1</button><br>
+  <button (click)="fijarSelector2(5)">Fijar en 5</button><br>
+  <button (click)="fijarSelector2(10)">Fijar en 10</button>  
+</div>
+<app-listadoarticulos [datos]="articulos"></app-listadoarticulos>
+<hr>
+<div style="text-align:center">
+  <app-dado-module valor="6"></app-dado-module>
+</div>
+<hr>
+
+<div *ngIf="articulos!=null; else espera">
+    <p>Consumiendo datos con Http</p>
+  <table border="1">
+    <tr>
+     
+      <td>Codigo</td><td>Descripcion</td><td>Precio</td>
+    </tr>
+    <tr *ngFor="let art of articulos">
+      <td>{{art.codigo}}</td>
+      <td>{{art.descripcion}}</td>
+      <td>{{art.precio}}</td>
+    </tr>
+  </table>
+</div>
+<ng-template #espera>Esperando datos...</ng-template>
+
+<hr>
+<div class="container">
+<table border="1">
+    <tr *ngFor="let articulo of articulosServices">
+      <td>{{articulo.codigo}}</td>
+      <td>{{articulo.descripcion}}</td>
+      <td>{{articulo.precio}}</td>
+    </tr>
+  </table>
+</div>
+<hr>
+<div class="container">
+  <h1>Administración de Asignaturas</h1>
+    <table border="1" *ngIf="hayRegistros(); else sinasignaturas">
+      <tr>
+        <td>Codigo</td><td>Descripcion</td><td>nota</td><td>Borrar</td><td>Seleccionar</td>
+      </tr>
+      <tr *ngFor="let asg of asignaturas">
+        <td>{{asg.codigo}}</td>
+        <td>{{asg.descripcion}}</td>
+        <td>{{asg.nota}}</td>
+        <td><button (click)="borrar(asg)">Borrar?</button></td>
+        <td><button (click)="seleccionar(asg)">Seleccionar</button></td>        
+      </tr>
+    </table>
+    <ng-template #sinasignaturas><p>No hay asignaturas.</p></ng-template>
+    <div>
+      <p>
+        Codigo:<input type="number" [(ngModel)]="asg.codigo" />
+      </p>
+      <p>
+        descripcion:<input type="text" [(ngModel)]="asg.descripcion" />
+      </p>
+      <p>
+        Nota:<input type="number" [(ngModel)]="asg.nota" />
+      </p>            
+      <p><button (click)="agregar()">Agregar</button>
+      <button (click)="modificar()">Modificar</button></p>
+    </div>
+</div>
